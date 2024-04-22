@@ -1,0 +1,233 @@
+{% extends 'base.html'%}
+{% load crispy_forms_tags %}
+{%load static%}
+
+{% block content %}
+
+    <!--=============== FLATICON ===============-->
+     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.2.0/uicons-regular-straight/css/uicons-regular-straight.css'>
+
+    <!--=============== SWIPER CSS ===============-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+
+    <!--=============== HEADER ===============-->
+    <header class="header">
+      <div class="header__top">
+        <div class="header__container container">
+          <div class="header__contact">
+            <span>(+01) - 2345 - 6789</span>
+
+            <span> Our location</span>
+          </div>
+
+          <p class="header__alert-news">
+            Super Value Deals - Save more with coupons
+          </p>
+
+          {% if user.is_authenticated %}
+          Hi {{ user.username }}!
+          <form action="{% url 'logout' %}" method="post" style="display: flex;">
+             {% csrf_token %}
+              <button type="submit">Log Out</button>
+          </form>
+          {% else %}
+              <a href="{% url 'login' %}" style="text-decoration: none; color: hsl(0, 0%, 13%);">Log In</a>
+              <a href="{% url 'signup' %}" style="text-decoration: none; color: hsl(0, 0%, 13%)" >Signup</a>
+          {% endif %}
+        </div>
+      </div>
+
+      <nav class="nav container">
+        <a href="{% url 'home' %}" class="nav__logo">
+          <img src="{% static 'images/logo.svg' %}" alt="" class="nav__logo-img" />
+        </a>
+
+        <div class="nav__menu" id="nav__menu">
+          <ul class="nav__list">
+            <li class="nav__item">
+              <a href="{% url 'home' %}" class="nav__link">Home</a>
+            </li>
+
+            <li class="nav__item">
+              <a href="{% url 'shop' %}" class="nav__link">Shop</a>
+            </li>
+
+            <li class="nav__item">
+              <a href="{% url 'accounts' %}" class="nav__link">My account</a>
+            </li>
+
+            <li class="nav__item">
+              <a href="{% url 'compare' %}" class="nav__link">Compare</a>
+            </li>
+
+            <li class="nav__item">
+              <a href="{% url 'login' %}" class="nav__link active-link">Login</a>
+            </li>
+          </ul>
+
+          <div class="header__search">
+            <input type="text" placeholder="Search for items..." class="form__input">
+
+            <button class="search__btn">
+              <img src="{% static 'images/search.png' %}" alt="" />
+            </button>
+          </div>
+        </div>
+
+        <div class="header__user-actions">
+          <a href="#" class="header__action-btn">
+            <img src="{% static 'images/icon-heart.svg' %}" alt="">
+            <span class="count">3</span>
+          </a>
+
+          <a href="{% url 'shop' %}" class="header__action-btn">
+            <img src="{% static 'images/icon-cart.svg' %}" alt="" >
+            <span class="count">3</span>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <!--=============== MAIN ===============-->
+    <main class="main">
+      <!--=============== BREADCRUMB ===============-->
+       <section class="breadcrumb">
+        <ul class="bredcrumb__list flex container">
+          <li><a href="{% url 'home' %}" class="bredcrumb__link">Home</a></li>
+          <li><span class="bredcrumb__link">></span></li>
+          <li><span class="bredcrumb__link">Register</span></li>
+        </ul>
+      </section>
+
+      <!--=============== LOGIN-REGISTER ===============-->
+      <section class="login-register section--lg">
+        <div class="login-register__container container grid">
+          <div class="login">
+            <h3 class="section__title">Create an Account</h3>
+
+            <form method="post" class="form grid">
+              {% csrf_token %}
+              {{ form|crispy }}
+              <div class="form__btn">
+                <button type="submit" class="btn" style="background-color: blue; color: white;">Sign Up</button>
+              </div>
+
+              <div class="log-in">
+                <a href="{% url 'login' %}">Already have account?</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!--=============== NEWSLETTER ===============-->
+         <section class="newsletter section home__newsletter">
+        <div class="newsletter__container container grid">
+          <h3 class="newsletter__title flex">
+            <img src="{% static 'images/icon-email.svg' %}" alt="" class="newsletter__icon">
+            Sign up to Newsletter
+          </h3>
+
+          <p class="newsletter__description">
+            ...and receive $25 coupon for first shopping
+          </p>
+
+          <form action="" class="newsletter__form">
+            <input type="text" placeholder="Enter your email" class="newsletter__input">
+            <button type="submit" class="newsletter__btn">Subcribe</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!--=============== FOOTER ===============-->
+    <footer class="footer container">
+      <div class="footer__container grid">
+        <div class="footer__content">
+          <a href="{% url 'home' %}" class="footer__logo">
+            <img src="{% static 'images/logo.svg' %}" alt="" class="footer__logo-img">
+          </a>
+
+          <h4 class="footer__subtitle">Contact</h4>
+
+          <p class="footer__description">
+            <span>Address:</span> 562 Wellington Road, Street 32, San Francisco
+          </p>
+
+          <p class="footer__description">
+            <span>Phone:</span> +998(97) 479 56 36
+          </p>
+
+          <p class="footer__description">
+            <span>Hours:</span> 10:00 - 18:00 Mon - Sat
+          </p>
+
+          <div class="footer__social">
+            <h4 class="footer__subtitle">Follow Me</h4>
+
+            <div class="footer__social-links flex">
+              <a href="">
+                <img src="{% static 'images/icon-facebook.svg' %}" alt="" class="footer__social-icon">
+              </a>
+
+              <a href="">
+                <img src="{% static 'images/icon-twitter.svg' %}" alt="" class="footer__social-icon">
+              </a>
+
+              <a href="">
+                <img src="{% static 'images/icon-instagram.svg' %}" alt="" class="footer__social-icon">
+              </a>
+
+              <a href="">
+                <img src="{% static 'images/icon-pinterest.svg' %}" alt="" class="footer__social-icon">
+              </a>
+
+              <a href="">
+                <img src="{% static 'images/icon-youtube.svg' %}" alt="" class="footer__social-icon">
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer__content">
+          <h3 class="footer__title">Address</h3>
+
+          <ul class="footer__links">
+            <li><a href="" class="footer__link">About Us</a></li>
+            <li><a href="" class="footer__link">Delivery Information</a></li>
+            <li><a href="" class="footer__link">Privacy Policy</a></li>
+            <li><a href="" class="footer__link">Terms & Condition</a></li>
+            <li><a href="" class="footer__link">Contact Us</a></li>
+            <li><a href="" class="footer__link">Support Center</a></li>
+          </ul>
+        </div>
+
+         <div class="footer__content">
+          <h3 class="footer__title">My Account</h3>
+
+          <ul class="footer__links">
+            <li><a href="" class="footer__link">Sign In</a></li>
+            <li><a href="" class="footer__link">View Cart</a></li>
+            <li><a href="" class="footer__link">My Wishlist</a></li>
+            <li><a href="" class="footer__link">Track My Order</a></li>
+            <li><a href="" class="footer__link">Help</a></li>
+            <li><a href="" class="footer__link">Order</a></li>
+          </ul>
+        </div>
+
+        <div class="footer__content">
+          <h3 class="footer__title">Secured Payment Gateways</h3>
+
+          <img src="{% static 'images/payment-method.png' %}" alt="" class="payment__img">
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p class="copyright">&copy; 2023 Evara. All rights reserved</p>
+        <span class="designer">Designed by Ulugbek</span>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock%}
